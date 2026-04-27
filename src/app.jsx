@@ -11,11 +11,8 @@ import {
   Clock,
   MessageSquare
 } from 'lucide-react';
-import { routes } from './routes';
 
 export default function App() {
-  const [activeRoute, setActiveRoute] = React.useState(routes.dashboard);
-
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-900">
       {/* Sidebar Navigation */}
@@ -29,30 +26,10 @@ export default function App() {
         </div>
         
         <nav className="flex-1 px-4 space-y-1">
-          <NavItem 
-            icon={<LayoutDashboard size={18} />} 
-            label="Dashboard" 
-            active={activeRoute === routes.dashboard}
-            onClick={() => setActiveRoute(routes.dashboard)}
-          />
-          <NavItem 
-            icon={<Users size={18} />} 
-            label="Employee Directory" 
-            active={activeRoute === routes.employees}
-            onClick={() => setActiveRoute(routes.employees)}
-          />
-          <NavItem 
-            icon={<CreditCard size={18} />} 
-            label="Payroll & Benefits" 
-            active={activeRoute === routes.payroll}
-            onClick={() => setActiveRoute(routes.payroll)}
-          />
-          <NavItem 
-            icon={<UserPlus size={18} />} 
-            label="Recruiting" 
-            active={activeRoute === routes.recruiting}
-            onClick={() => setActiveRoute(routes.recruiting)}
-          />
+          <NavItem icon={<LayoutDashboard size={18} />} label="Dashboard" active />
+          <NavItem icon={<Users size={18} />} label="Employee Directory" />
+          <NavItem icon={<CreditCard size={18} />} label="Payroll & Benefits" />
+          <NavItem icon={<UserPlus size={18} />} label="Recruiting" />
         </nav>
 
         <div className="p-4 border-t border-slate-800">
@@ -73,21 +50,13 @@ export default function App() {
               className="w-full bg-slate-100 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-sky-500 transition-all"
             />
           </div>
-          <div className="flex items-center gap-2 ml-4">
-            <HeaderAction icon={<Bell size={20} />} hasBadge />
-            <HeaderAction icon={<Clock size={20} />} />
-            <HeaderAction icon={<MessageSquare size={20} />} />
-            
-            <div className="flex items-center gap-3 border-l border-slate-200 pl-4 ml-2">
+          <div className="flex items-center gap-4 ml-4">
+            <div className="flex items-center gap-3 border-l border-slate-200 pl-4">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-semibold leading-none">Nihanth Alexander</p>
                 <p className="text-[11px] text-slate-500 mt-1">System Administrator</p>
               </div>
-              <img 
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=80&h=80&q=80" 
-                alt="Profile" 
-                className="w-9 h-9 rounded-full ring-2 ring-slate-100 object-cover"
-              />
+              <div className="w-9 h-9 bg-slate-200 rounded-full"></div>
             </div>
           </div>
         </header>
@@ -101,20 +70,27 @@ export default function App() {
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <StatCard title="Total Headcount" value="1,248" change="+12 this month" trend="up" />
-              <StatCard title="Retention Rate" value="94.2%" change="Benchmark: 88%" trend="up" />
-              <StatCard title="Open Positions" value="42" change="8 urgent priority" trend="down" />
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Headcount</p>
+                <h3 className="text-3xl font-bold text-slate-900">1,248</h3>
+                <p className="text-[11px] font-semibold mt-2 text-emerald-600">+12 this month</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Retention Rate</p>
+                <h3 className="text-3xl font-bold text-slate-900">94.2%</h3>
+                <p className="text-[11px] font-semibold mt-2 text-emerald-600">Benchmark: 88%</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Open Positions</p>
+                <h3 className="text-3xl font-bold text-slate-900">42</h3>
+                <p className="text-[11px] font-semibold mt-2 text-amber-600">8 urgent priority</p>
+              </div>
             </div>
             
             <div className="bg-white rounded-xl border border-slate-200 p-12 shadow-sm text-center">
-              <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <LayoutDashboard className="text-slate-300" size={32} />
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900">Module View Placeholder</h3>
-              <p className="text-slate-500 mt-2 max-w-md mx-auto">
-                Currently viewing: <span className="font-medium text-sky-600 uppercase tracking-wider">{activeRoute.replace('/', '') || 'Dashboard'}</span>. 
-                In a full application, the corresponding module component would render here.
-              </p>
+              <LayoutDashboard className="text-slate-200 mx-auto mb-4" size={48} />
+              <h3 className="text-lg font-semibold text-slate-900">Dashboard Loaded</h3>
+              <p className="text-slate-500 mt-2">The core HCM shell is active and ready for module integration.</p>
             </div>
           </div>
         </div>
@@ -123,42 +99,15 @@ export default function App() {
   );
 }
 
-function NavItem({ icon, label, active = false, onClick }) {
+function NavItem({ icon, label, active = false }) {
   return (
-    <button 
-      onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
-        active 
-          ? 'bg-sky-600 text-white shadow-md shadow-sky-900/40' 
-          : 'text-slate-400 hover:text-white hover:bg-slate-800'
-      }`}
-    >
+    <button className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
+      active 
+        ? 'bg-sky-600 text-white shadow-md' 
+        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+    }`}>
       {icon}
       <span className="font-medium text-sm">{label}</span>
     </button>
-  );
-}
-
-function HeaderAction({ icon, hasBadge = false }) {
-  return (
-    <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition-colors">
-      {icon}
-      {hasBadge && (
-        <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
-      )}
-    </button>
-}
-
-function StatCard({ title, value, change, trend }) {
-  return (
-    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">{title}</p>
-      <div className="flex items-baseline gap-2">
-        <h3 className="text-3xl font-bold text-slate-900">{value}</h3>
-      </div>
-      <p className={`text-[11px] font-semibold mt-2 ${trend === 'up' ? 'text-emerald-600' : 'text-amber-600'}`}>
-        {change}
-      </p>
-    </div>
   );
 }
