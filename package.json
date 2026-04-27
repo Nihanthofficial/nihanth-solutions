@@ -24,31 +24,3 @@
     "vite": "^4.4.5"
   }
 }
-```
-
-### 3. vite.config.js
-```javascript
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    outDir: 'dist',
-    rollupOptions: {
-      input: {
-        main: './index.html',
-      },
-    },
-  },
-});
-```
-
-### 4. vercel.json
-```json
-{
-  "framework": "vite",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
