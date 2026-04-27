@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+// CRITICAL: Explicitly using .jsx to ensure Vite finds the file
+import App from './App.jsx';
 
 const rootElement = document.getElementById('root');
 
@@ -11,4 +12,7 @@ if (rootElement) {
       <App />
     </React.StrictMode>
   );
+} else {
+  console.error("Root element not found");
 }
+
